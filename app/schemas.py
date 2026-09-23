@@ -55,3 +55,38 @@ class MarkerOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class MapNodeCreate(BaseModel):
+    store_id: int
+    x: float
+    y: float
+    floor: int = 0
+    label: Optional[str] = None
+
+class MapNodeOut(BaseModel):
+    id: int
+    store_id: int
+    x: float
+    y: float
+    floor: int
+    label: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+class MapEdgeCreate(BaseModel):
+    store_id: int
+    node_a_id: int
+    node_b_id: int
+    distance: float
+
+class MapEdgeOut(BaseModel):
+    id: int
+    store_id: int
+    node_a_id: int
+    node_b_id: int
+    distance: float
+
+    class Config:
+        from_attributes = True
