@@ -62,6 +62,7 @@ button.replay{margin-top:10px;padding:8px 14px;border-radius:10px;border:1px sol
 .pos{margin-top:10px;font-size:14px;color:var(--ok)}
 .err{color:#fca5a5;margin-top:8px;font-size:14px}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:6px 0 22px}
+@media(max-width:600px){.lbl{font-size:21px}.shelf{font-size:26px}}
 </style>
 </head>
 <body>
@@ -99,7 +100,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:6px 0 22px}
 <footer id="foot"></footer>
 
 <script>
-const S = 44, PAD = 56;
+const S = 44, PAD = 80;
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const state = {store:null, nodes:[], edges:[], byId:{}, edgeLen:{}, products:[], markers:[], start:null, anim:null, lastPts:null, px:null, py:null};
