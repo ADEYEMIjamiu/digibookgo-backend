@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from datetime import date
 from .database import engine, Base
-from . import models, stores, products, markers, navigation, map_data
+from . import models, stores, products, markers, navigation, map_data, demo
 
 Base.metadata.create_all(bind=engine)
 
@@ -12,6 +12,7 @@ app.include_router(products.router)
 app.include_router(markers.router)
 app.include_router(navigation.router)
 app.include_router(map_data.router)
+app.include_router(demo.router)
 
 @app.get("/api/health")
 def health():
