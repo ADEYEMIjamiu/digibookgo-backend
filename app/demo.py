@@ -1,7 +1,8 @@
 """
 Demo page for digibookgo: visual store map + live route finder.
 
-Served at /demo. The page runs in the browser and reads everything
+Served at /demo, and at /api/navigation/demo (via navigation.py) so it
+also works behind nginx. The page runs in the browser and reads everything
 from the same API (stores, map nodes/edges, products, markers, route),
 so no extra setup or CORS settings are needed.
 
@@ -250,10 +251,16 @@ function showRoute(data, prod){
   }
   const secs = Math.round(data.distance / 1.4);
   $('#summary').textContent = fmt(data.distance) + ' m \u00b7 about ' + secs + ' s walk \u00b7 ' + (data.shelf_label || '');
-  const steps = buildSteps(data.path_node_ids, data.coordinates, prod ? prod.name : 'Product', data.shelf_label);
+  const steps = (data.steps && data.steps.length)
+    ? data.steps.map(s => ({ic: stepIcon(s.action), txt: s.text}))
+    : buildSteps(data.path_node_ids, data.coordinates, prod ? prod.name : 'Product', data.shelf_label);
   $('#steps').innerHTML = steps.map(s => '<li><span class="ic">' + s.ic + '</span><span>' + esc(s.txt) + '</span></li>').join('');
   $('#replay').style.display = '';
   animate(pts);
+}
+
+function stepIcon(a){
+  return {walk:'\u2b06\ufe0f', turn_left:'\u21b0', turn_right:'\u21b1', turn_around:'\ud83d\udd04', arrive:'\ud83c\udfc1'}[a] || '\u2b06\ufe0f';
 }
 
 function buildSteps(path, coords, name, shelf){
